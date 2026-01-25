@@ -21,7 +21,7 @@ public class SpringSecurity {
                 .csrf(csrf -> csrf.disable()).cors(cors -> {
                 })
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/public/**","/public/contact").permitAll()
                         .requestMatchers("/admin/login", "/admin/logout").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())

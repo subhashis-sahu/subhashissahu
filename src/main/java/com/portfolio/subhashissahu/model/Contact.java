@@ -1,26 +1,26 @@
 package com.portfolio.subhashissahu.model;
 
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
-@Entity
-@AllArgsConstructor
-public class Works {
+public class Contact {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String tittle;
-    private String describtion;
-    private String techStack;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
+
+    private String name;
+    private String email;
+    private String message;
 
     
 }
+
