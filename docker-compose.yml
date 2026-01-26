@@ -10,9 +10,11 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/portfolio
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: subha
+    networks:
+      - spring-net
 
   postgres:
-    image: postgres:latest  
+    image: postgres 
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: subha
@@ -21,6 +23,11 @@ services:
       - "5433:5432"
     volumes:
       - postgres-s-data:/var/lib/postgresql/data
+    networks:
+      - spring-net
     
 volumes:
   postgres-s-data:
+networks:
+  spring-net:
+    driver: bridge
