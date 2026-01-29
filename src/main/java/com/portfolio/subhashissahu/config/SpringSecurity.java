@@ -17,28 +17,38 @@ public class SpringSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+            // Disable CSRF for APIs
+            .csrf(csrf -> csrf.disable())
 
-                .csrf(csrf -> csrf.disable()).cors(cors -> {
-                })
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/works","/public/contact").permitAll()
-                        .requestMatchers("/admin/login", "/admin/logout").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated())
-                .formLogin(login -> login
-                        .loginProcessingUrl("/admin/login")
-                        .defaultSuccessUrl("/admin/check", true) // 🔥 FIX
-                        .permitAll())
-                .logout(logout -> logout
-                        .logoutUrl("/admin/logout"));
+            // Enable CORS
+            .cors(cors -> {})
+
+            // Authorization rules
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/public/**").permitAll()
+                .requestMatchers("/admin/login", "/admin/logout").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            )
+
+            // ❌ Disable form login (VERY IMPORTANT)
+            .formLogin(form -> form.disable())
+
+            // ❌ Disable basic auth
+            .httpBasic(basic -> basic.disable());
 
         return http.build();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173","https://subhashis-sahu.vercel.app","https://subhashissahu.onrender.com"));
+        config.setAllowedOrigins(List.of(
+            "http://localhost:5173",
+            "https://subhashis-sahu.vercel.app",
+            "https://subhashissahu.onrender.com"
+        ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
@@ -47,5 +57,4 @@ public class SpringSecurity {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
-
 }
