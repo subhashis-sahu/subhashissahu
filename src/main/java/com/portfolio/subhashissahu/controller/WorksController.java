@@ -17,7 +17,7 @@ import com.portfolio.subhashissahu.model.Contact;
 import com.portfolio.subhashissahu.model.Works;
 import com.portfolio.subhashissahu.service.ContactService;
 import com.portfolio.subhashissahu.service.WorksService;
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://subhashis-sahu.vercel.app")
 @RestController
 public class WorksController {
 
