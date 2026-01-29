@@ -1,3 +1,4 @@
+
 services:
   postgres:
     image: postgres:13
@@ -7,6 +8,7 @@ services:
       POSTGRES_DB: portfolio
     ports:
       - "5433:5432"
+    
     volumes:
       - postgres-s-data:/var/lib/postgresql/data
     networks:
@@ -21,6 +23,8 @@ services:
     build: .
     ports:
       - "8080:8080"
+    env_file:
+      - .env
     depends_on:
       postgres:
         condition: service_healthy
@@ -37,3 +41,4 @@ volumes:
 networks:
   spring-net:
     driver: bridge
+
