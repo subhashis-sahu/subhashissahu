@@ -2,11 +2,10 @@ package com.portfolio.subhashissahu.controller;
 
 import java.util.List;
 
-import org.springframework.boot.health.contributor.Status;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
+import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +17,7 @@ import com.portfolio.subhashissahu.model.Contact;
 import com.portfolio.subhashissahu.model.Works;
 import com.portfolio.subhashissahu.service.ContactService;
 import com.portfolio.subhashissahu.service.WorksService;
-@CrossOrigin(origins = "https://subhashis-sahu.vercel.app")
+
 @RestController
 @RequestMapping("/api")
 public class WorksController {
@@ -41,15 +40,15 @@ public class WorksController {
         return worksService.getWorksById(id);
     }
 
-    // @PostMapping("/admin/works")
-    // public ResponseEntity<String> addWorks(@RequestBody Works work) {
-    //     return worksService.addWorks(work);
-    // }
+    @PostMapping("/admin/works")
+    public ResponseEntity<String> addWorks(@RequestBody Works work) {
+        return worksService.addWorks(work);
+    }
 
-    // @DeleteMapping("/admin/works/{id}")
-    // public ResponseEntity<String> deleteWorkById(@PathVariable int id) {
-    //     return worksService.deleteWorkById(id);
-    // }
+    @DeleteMapping("/admin/works/{id}")
+    public ResponseEntity<String> deleteWorkById(@PathVariable int id) {
+        return worksService.deleteWorkById(id);
+    }
 
     @GetMapping("/admin/check")
     public ResponseEntity<?> checkAuth() {
@@ -65,18 +64,18 @@ public class WorksController {
 
     }
 
-    // @GetMapping("/admin/allContacts")
-    // public ResponseEntity<List<Contact>> getAllContacts()
-    // {
-    //     return contactService.getAllContacts();
+    @GetMapping("/admin/allContacts")
+    public ResponseEntity<List<Contact>> getAllContacts()
+    {
+        return contactService.getAllContacts();
 
-    // }
-    // @GetMapping("/admin/contact/{id}")
-    // public ResponseEntity<Contact> getContactsById(@PathVariable Long id)
-    // {
-    //     return contactService.getContactById(id);
+    }
+    @GetMapping("/admin/contact/{id}")
+    public ResponseEntity<Contact> getContactsById(@PathVariable Long id)
+    {
+        return contactService.getContactById(id);
 
-    // }
+    }
 
     @GetMapping("/health")
     public ResponseEntity<String> getHealth()

@@ -29,22 +29,22 @@ public class WorksService {
         return ResponseEntity.ok(works);
     }
 
-    // @PreAuthorize("hasRole('ADMIN')")
-    // public ResponseEntity<String> addWorks(Works work) {
-    //     worksRepo.save(work);
-    //     return ResponseEntity
-    //             .status(HttpStatus.CREATED)
-    //             .body("Work added successfully");
-    // }
+    
+    public ResponseEntity<String> addWorks(Works work) {
+        worksRepo.save(work);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body("Work added successfully");
+    }
 
-    // @PreAuthorize("hasRole('ADMIN')")
-    // public ResponseEntity<String> deleteWorkById(int id) {
+    
+    public ResponseEntity<String> deleteWorkById(int id) {
 
-    //     if (!worksRepo.existsById(id)) {
-    //         throw new RuntimeException("Work not found");
-    //     }
+        if (!worksRepo.existsById(id)) {
+            throw new RuntimeException("Work not found");
+        }
 
-    //     worksRepo.deleteById(id);
-    //     return ResponseEntity.noContent().build();
-    // }
+        worksRepo.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

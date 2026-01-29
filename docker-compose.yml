@@ -1,20 +1,6 @@
-
 services:
-  app:
-    build: .
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/portfolio
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: subha
-    networks:
-      - spring-net
-
   postgres:
-    image: postgres 
+    image: postgres:13
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: subha
@@ -25,9 +11,29 @@ services:
       - postgres-s-data:/var/lib/postgresql/data
     networks:
       - spring-net
-    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/portfolio
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: subha
+    networks:
+      - spring-net
+
 volumes:
   postgres-s-data:
+
 networks:
   spring-net:
     driver: bridge
