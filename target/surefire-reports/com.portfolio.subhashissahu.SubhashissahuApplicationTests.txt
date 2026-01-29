@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.portfolio.subhashissahu.SubhashissahuApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.008 s -- in com.portfolio.subhashissahu.SubhashissahuApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.005 s -- in com.portfolio.subhashissahu.SubhashissahuApplicationTests

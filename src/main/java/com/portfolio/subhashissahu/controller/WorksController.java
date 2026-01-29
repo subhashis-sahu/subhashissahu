@@ -2,6 +2,8 @@ package com.portfolio.subhashissahu.controller;
 
 import java.util.List;
 
+import org.springframework.boot.health.contributor.Status;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -75,4 +77,11 @@ public class WorksController {
     //     return contactService.getContactById(id);
 
     // }
+
+    @GetMapping("/health")
+    public ResponseEntity<String> getHealth()
+    {
+        return ResponseEntity.ok("Ok");
+
+    }
 }
