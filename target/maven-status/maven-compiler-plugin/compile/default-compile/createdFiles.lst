@@ -6,4 +6,3 @@ com\portfolio\subhashissahu\model\Contact.class
 com\portfolio\subhashissahu\repo\WorksRepo.class
 com\portfolio\subhashissahu\repo\ContactRepo.class
 com\portfolio\subhashissahu\service\ContactService.class
-com\portfolio\subhashissahu\config\SpringSecurity.class
