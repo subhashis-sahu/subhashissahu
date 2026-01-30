@@ -43,7 +43,7 @@ public class SecuritySpring {
     public CorsConfigurationSource corsConfigurationSource()
     {
         CorsConfiguration conf=new CorsConfiguration();
-        conf.setAllowedOrigins(List.of("https://subhashis-sahu.vercel.app"));
+        conf.setAllowedOrigins(List.of("https://subhashis-sahu.vercel.app","http://localhost:5173"));
         conf.setAllowedMethods(List.of("POST","GET","PUT","DELETE"));
         conf.setAllowedHeaders(List.of("*"));
 
