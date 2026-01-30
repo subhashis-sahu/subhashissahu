@@ -29,11 +29,19 @@ public class JwtFilter extends OncePerRequestFilter {
             FilterChain filterChain) throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
+        String path = request.getServletPath();
 
-        
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            SecurityContextHolder.clearContext();
+        if (path.equals("/api/admin/login")
+                || path.equals("/api/admin/logout")
+                || path.equals("/api/health")
+                || path.startsWith("/api/public")) {
+
             filterChain.doFilter(request, response);
+            return;
+        }
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
@@ -42,18 +50,16 @@ public class JwtFilter extends OncePerRequestFilter {
         try {
             String username = jwtUtil.extractUsername(token);
 
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(
-                            username,
-                            null,
-                            List.of(() -> "ROLE_ADMIN")
-                    );
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    username,
+                    null,
+                    List.of(() -> "ROLE_ADMIN"));
 
             SecurityContextHolder.getContext()
                     .setAuthentication(authentication);
 
         } catch (Exception e) {
-            
+
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
