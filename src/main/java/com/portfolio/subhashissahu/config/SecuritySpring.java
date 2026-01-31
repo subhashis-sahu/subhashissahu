@@ -1,8 +1,6 @@
 package com.portfolio.subhashissahu.config;
 
-
 import java.util.List;
-
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,32 +22,31 @@ public class SecuritySpring {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
-    {
-        http.csrf(csrf->csrf.disable())
-        .cors(cors->cors.configurationSource(corsConfigurationSource()))
-        .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .authorizeHttpRequests(
-            auth->auth.requestMatchers("/api/public/**").permitAll().requestMatchers("/api/health").permitAll()
-            .requestMatchers("/api/admin/login","/api/admin/logout").permitAll()
-            .requestMatchers("/api/admin/**").authenticated().anyRequest().denyAll())
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(
+                        auth -> auth.requestMatchers("/api/public/**").permitAll().requestMatchers("/api/health")
+                                .permitAll()
+                                .requestMatchers("/api/admin/login", "/api/admin/logout").permitAll()
+                                .requestMatchers("/api/admin/**").authenticated().anyRequest().denyAll())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
 
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource()
-    {
-        CorsConfiguration conf=new CorsConfiguration();
-        conf.setAllowedOrigins(List.of("https://subhashis-sahu.vercel.app","http://localhost:5173"));
-        conf.setAllowedMethods(List.of("POST","GET","PUT","DELETE"));
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration conf = new CorsConfiguration();
+        conf.setAllowedOrigins(List.of("https://subhashissahu.vercel.app/", "http://localhost:5173"));
+        conf.setAllowedMethods(List.of("POST", "GET", "PUT", "DELETE"));
         conf.setAllowedHeaders(List.of("*"));
 
-        UrlBasedCorsConfigurationSource source=new UrlBasedCorsConfigurationSource();
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", conf);
         return source;
     }
-    
+
 }
